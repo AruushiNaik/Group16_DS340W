@@ -1,0 +1,41 @@
+import pandas as pd
+from sklearn.model_selection import train_test_split
+
+data = pd.read_csv("DepressionDataset.csv")
+
+training_data, temporary_data = train_test_split(
+    data,
+    test_size=0.30,
+    random_state=42,
+    shuffle=True
+)
+
+testing_data, validation_data = train_test_split(
+    temporary_data,
+    test_size=1/3,
+    random_state=42,
+    shuffle=True
+)
+
+training_data.to_csv("DepressionTrainingDataset.csv", index=False)
+testing_data.to_csv("DepressionTestDataset.csv", index=False)
+validation_data.to_csv("DepressionValidationDataset.csv", index=False)
+
+total = len(data)
+
+print("Original dataset:", data.shape)
+print(
+    "Training dataset:",
+    training_data.shape,
+    f"({len(training_data) / total:.1%})"
+)
+print(
+    "Testing dataset:",
+    testing_data.shape,
+    f"({len(testing_data) / total:.1%})"
+)
+print(
+    "Validation dataset:",
+    validation_data.shape,
+    f"({len(validation_data) / total:.1%})"
+)
